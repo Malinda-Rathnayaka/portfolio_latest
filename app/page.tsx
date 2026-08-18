@@ -7,11 +7,14 @@ import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import ScrollProgress from "@/components/ScrollProgress";
+import SkillsBackground from "@/components/SkillsBackground";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen bg-void overflow-x-hidden">
-      <div className="fixed inset-0 -z-10 bg-space-gradient" aria-hidden="true" />
+    <main className="relative min-h-screen bg-black overflow-x-hidden">
+      <div className="fixed inset-0 z-0">
+        <SkillsBackground />
+      </div>
       <ScrollProgress />
       <Navbar />
       <Hero />

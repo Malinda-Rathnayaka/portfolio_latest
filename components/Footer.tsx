@@ -8,7 +8,6 @@ import {
   Twitter,
   Linkedin,
 } from "lucide-react";
-import ParticleNetwork from "./ParticleNetwork";
 
 export default function Footer() {
   const scrollToSection = (id: string) => {
@@ -19,15 +18,13 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative w-full bg-[#030014] text-white py-16 px-6 md:px-16 overflow-hidden z-10">
+    <footer className="relative w-full bg-transparent text-white py-16 px-6 md:px-16 overflow-hidden z-10">
       
       {/* 1. TOP HORIZON DIVIDER LINE (Signals Page Ending / Footer Start) */}
       <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent z-20" />
       
       {/* 2. MATCHING BACKGROUND EFFECTS */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        {/* Interactive Particle Network */}
-        <ParticleNetwork />
 
         {/* Top Glow Accent */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[120px] bg-cyan-500/10 blur-[100px] rounded-full" />

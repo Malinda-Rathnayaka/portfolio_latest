@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import SkillsBackground from "./SkillsBackground";
 
 const SKILL_ROWS = [
   // Row 1 (11 Skills)
@@ -48,11 +47,8 @@ export default function Skills() {
   return (
     <section
       id="skills"
-      className="relative w-full min-h-screen bg-[#020617] text-white py-28 px-4 overflow-hidden z-10 flex flex-col items-center justify-center"
+      className="relative w-full min-h-screen text-white py-28 px-4 overflow-hidden z-10 flex flex-col items-center justify-center bg-transparent"
     >
-      {/* Interactive Cursor-Reactive Particle Network */}
-      <SkillsBackground />
-
       {/* Foreground Content */}
       <div className="relative z-10 max-w-6xl mx-auto w-full flex flex-col items-center">
         
@@ -63,11 +59,11 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 text-slate-400 font-mono text-xs uppercase tracking-[0.25em] mb-4"
+            className="inline-flex items-center gap-2 text-gray-400 font-mono text-xs uppercase tracking-[0.25em] mb-4"
           >
-            <span className="w-6 h-[1px] bg-slate-700" />
+            <span className="w-6 h-[1px] bg-white/30" />
             TECHNICAL STACK
-            <span className="w-6 h-[1px] bg-slate-700" />
+            <span className="w-6 h-[1px] bg-white/30" />
           </motion.div>
 
           <motion.h2
@@ -75,10 +71,10 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white"
+            className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight text-white uppercase"
           >
             Engineering with{" "}
-            <span className="text-slate-100 font-extrabold">
+            <span className="text-white underline decoration-white/30">
               modern technologies
             </span>
           </motion.h2>
@@ -88,7 +84,7 @@ export default function Skills() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-3 text-base sm:text-lg text-slate-400 font-normal leading-relaxed"
+            className="mt-3 text-base sm:text-lg text-gray-400 font-normal leading-relaxed"
           >
             The frameworks, languages, and infrastructure tools I use to build scalable products.
           </motion.p>
@@ -121,12 +117,12 @@ export default function Skills() {
                       scale: 1.18,
                       y: -6,
                       borderColor: "rgba(255, 255, 255, 0.3)",
-                      backgroundColor: "rgba(30, 41, 59, 0.95)",
+                      backgroundColor: "rgba(255, 255, 255, 0.1)",
                     }}
-                    className="group relative p-3 sm:p-4 rounded-2xl bg-slate-900/90 border border-slate-800/90 backdrop-blur-md shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-center"
+                    className="group relative p-3 sm:p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md shadow-lg transition-all duration-300 cursor-pointer flex items-center justify-center"
                   >
                     {/* Tooltip */}
-                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-slate-950 text-slate-200 text-xs font-mono rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-slate-700 shadow-xl z-40">
+                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 px-2.5 py-1 bg-black/90 text-gray-200 text-xs font-mono rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none whitespace-nowrap border border-white/20 backdrop-blur-md shadow-xl z-40">
                       {skill.name}
                     </div>
 

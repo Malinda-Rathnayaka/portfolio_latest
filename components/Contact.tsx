@@ -1,247 +1,333 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Mail, Linkedin, Github, Send, Copy, Check, ExternalLink } from "lucide-react";
-import ParticleNetwork from "./ParticleNetwork";
+import React, { useState } from "react";
 
-export default function Contact() {
-  const [copiedEmail, setCopiedEmail] = useState(false);
-  const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("rathnayakamalinda14@gmail.com");
-    setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 2000);
-  };
+export default function ContactPage() {
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    setFormSubmitted(true);
-    setTimeout(() => {
-      setFormSubmitted(false);
-      setFormData({ name: "", email: "", message: "" });
-    }, 4000);
+    setSubmitted(true);
+    setTimeout(() => setSubmitted(false), 4000);
   };
 
   return (
-    <section
-      id="contact"
-      className="relative w-full py-28 bg-[#020617] text-white overflow-hidden z-10"
-    >
-      {/* Background Interactive Particle Network & Ambient Glows */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-        <ParticleNetwork />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-cyan-950/20 rounded-full blur-[180px]" />
-        <div className="absolute bottom-10 left-10 w-[350px] h-[350px] bg-blue-950/20 rounded-full blur-[150px]" />
-      </div>
+    <section className="relative w-full min-h-screen py-24 bg-neutral-950 text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
+      {/* Custom Styles for Transparent E-Card Waves and Animated Glowing Borders */}
+      <style jsx>{`
+        .card-wrapper {
+          position: relative;
+          border-radius: 16px;
+          overflow: hidden;
+          padding: 1.5px;
+          isolation: isolate;
+        }
 
-      {/* Main Container */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 md:px-10">
+        .e-card {
+          background: rgba(17, 18, 21, 0.85);
+          box-shadow: 0px 8px 28px -9px rgba(0, 0, 0, 0.5);
+          position: relative;
+          border-radius: 14.5px;
+          overflow: hidden;
+          backdrop-filter: blur(12px);
+          height: 100%;
+          width: 100%;
+        }
+
+        /* Animated Border Effects from SelfMadeSystem */
+        .spin {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          overflow: hidden;
+          border-radius: inherit;
+        }
+
+        .spin-blur {
+          filter: blur(2em);
+          opacity: 0.7;
+        }
+
+        .spin-intense {
+          inset: -1px;
+          filter: blur(0.5em);
+        }
+
+        .spin-inside {
+          inset: -1px;
+          filter: blur(2px);
+          z-index: 0;
+        }
+
+        .spin::before {
+          content: "";
+          position: absolute;
+          inset: -60%;
+          animation: speen 8s cubic-bezier(0.56, 0.15, 0.28, 0.86) infinite;
+        }
+
+        .spin-blur::before {
+          background: linear-gradient(-45deg, #f50, transparent 46% 54%, #05f);
+        }
+
+        .spin-intense::before {
+          background: linear-gradient(-45deg, #f95, transparent 35% 65%, #59f);
+        }
+
+        .spin-inside::before {
+          background: linear-gradient(-45deg, #fc9, transparent 35% 65%, #9cf);
+        }
+
+        @keyframes speen {
+          0% {
+            transform: rotate(0deg);
+          }
+          50% {
+            transform: rotate(180deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        /* Ambient Card Waves */
+        .wave {
+          position: absolute;
+          width: 540px;
+          height: 700px;
+          opacity: 0.15;
+          left: 0;
+          top: 0;
+          margin-left: -50%;
+          margin-top: -70%;
+          background: linear-gradient(
+            744deg,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 255, 255, 0.02) 60%,
+            rgba(255, 255, 255, 0.08)
+          );
+          border-radius: 40%;
+          animation: wave 25s infinite linear;
+          pointer-events: none;
+        }
+
+        .wave:nth-child(2) {
+          top: 180px;
+          opacity: 0.1;
+          animation-duration: 30s;
+        }
+
+        .wave:nth-child(3) {
+          top: 220px;
+          opacity: 0.05;
+          animation-duration: 35s;
+        }
+
+        .e-card:hover .wave {
+          animation-duration: 6000ms;
+          opacity: 0.25;
+        }
+
+        .e-card:hover .wave:nth-child(2) {
+          animation-duration: 8000ms;
+        }
+
+        .e-card:hover .wave:nth-child(3) {
+          animation-duration: 10000ms;
+        }
+
+        @keyframes wave {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
+
+      {/* Subtle Background Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative z-10 max-w-6xl w-full px-6 md:px-10">
         
-        {/* Section Tag */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 text-cyan-400 font-mono text-xs uppercase tracking-widest"
-        >
-          <span className="w-8 h-[1px] bg-cyan-400/60" />
+        {/* Header */}
+        <div className="text-center mb-16">
+          <span className="text-xs font-mono tracking-widest text-neutral-400 uppercase">
+            // Get In Touch
+          </span>
+          <h2 className="text-4xl sm:text-6xl font-extrabold tracking-tight mt-2 text-white uppercase">
+            Contact Me
+          </h2>
+          <p className="mt-4 text-neutral-400 font-light text-base sm:text-lg max-w-xl mx-auto">
+            Have a project in mind, an opportunity to discuss, or just want to connect? Send a message below.
+          </p>
+        </div>
+
+        {/* Contact Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-        </motion.div>
-
-        {/* Headline & Description */}
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-black mt-3 tracking-tight text-white uppercase"
-        >
-          LET'S BUILD SOMETHING
-        </motion.h2>
-
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-4 max-w-2xl text-slate-300/90 text-base sm:text-lg leading-relaxed font-normal"
-        >
-          I'm currently looking for opportunities to grow as a software engineer and contribute to real-world projects.
-        </motion.p>
-
-        {/* Grid Layout: Contact Info Cards + Form */}
-        <div className="mt-14 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Left Side: Contact Channels (5 Cols) */}
-          <div className="lg:col-span-5 space-y-4">
+          {/* Direct Info Cards */}
+          <div className="lg:col-span-5 flex flex-col gap-6">
             
-            {/* EMAIL CARD */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-              className="p-6 rounded-2xl bg-[#0b0e1e]/80 border border-slate-800/80 backdrop-blur-md hover:border-cyan-500/40 transition-all duration-300 group"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-cyan-400 flex items-center gap-2">
-                  <Mail className="w-4 h-4 text-cyan-400" /> EMAIL
-                </span>
-                <button
-                  onClick={handleCopyEmail}
-                  className="p-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white hover:border-slate-700 transition-colors flex items-center gap-1 text-[11px] font-mono"
-                  title="Copy email address"
-                >
-                  {copiedEmail ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-400" />
-                      <span className="text-emerald-400">COPIED</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>COPY</span>
-                    </>
-                  )}
-                </button>
-              </div>
-              <a
-                href="mailto:rathnayakamalinda14@gmail.com"
-                className="text-base sm:text-lg font-semibold text-slate-100 hover:text-cyan-300 transition-colors break-all flex items-center gap-2"
-              >
-                rathnayakamalinda14@gmail.com
-              </a>
-            </motion.div>
+            {/* Email Card */}
+            <div className="card-wrapper">
+              <div className="spin spin-blur" />
+              <div className="spin spin-intense" />
+              <div className="spin spin-inside" />
 
-            {/* LINKEDIN CARD */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-              className="p-6 rounded-2xl bg-[#0b0e1e]/80 border border-slate-800/80 backdrop-blur-md hover:border-cyan-500/40 transition-all duration-300 group"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-cyan-400 flex items-center gap-2">
-                  <Linkedin className="w-4 h-4 text-cyan-400" /> LINKEDIN
-                </span>
-                <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-              </div>
               <a
-                href="https://www.linkedin.com/in/malinda-rathnayaka/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-base sm:text-lg font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors"
+                href="mailto:hello@example.com"
+                className="e-card p-6 flex items-center justify-between group transition-all duration-300 block"
               >
-                Malinda Rathnayaka
-              </a>
-            </motion.div>
+                <div className="wave" />
+                <div className="wave" />
+                <div className="wave" />
 
-            {/* GITHUB CARD */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.5 }}
-              className="p-6 rounded-2xl bg-[#0b0e1e]/80 border border-slate-800/80 backdrop-blur-md hover:border-cyan-500/40 transition-all duration-300 group"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-mono text-xs font-bold uppercase tracking-widest text-cyan-400 flex items-center gap-2">
-                  <Github className="w-4 h-4 text-cyan-400" /> GITHUB
-                </span>
-                <ExternalLink className="w-4 h-4 text-slate-500 group-hover:text-cyan-400 transition-colors" />
-              </div>
-              <a
-                href="https://github.com/Malinda-Rathnayaka"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-base sm:text-lg font-semibold text-slate-100 group-hover:text-cyan-300 transition-colors"
-              >
-                Malinda-Rathnayaka
+                <div className="relative z-10">
+                  <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-1">
+                    Email
+                  </span>
+                  <p className="text-lg font-semibold text-white group-hover:text-neutral-200">
+                    hello@example.com
+                  </p>
+                </div>
+
+                <div className="relative z-10 p-3 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
               </a>
-            </motion.div>
+            </div>
+
+            {/* Location Card */}
+            <div className="card-wrapper">
+              <div className="spin spin-blur" />
+              <div className="spin spin-intense" />
+              <div className="spin spin-inside" />
+
+              <div className="e-card p-6 flex items-center justify-between">
+                <div className="wave" />
+                <div className="wave" />
+                <div className="wave" />
+
+                <div className="relative z-10">
+                  <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-1">
+                    Location
+                  </span>
+                  <p className="text-lg font-semibold text-white">
+                    Colombo, Sri Lanka
+                  </p>
+                </div>
+
+                <div className="relative z-10 p-3 rounded-full bg-white/5 border border-white/10">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Links Card */}
+            <div className="card-wrapper">
+              <div className="spin spin-blur" />
+              <div className="spin spin-intense" />
+              <div className="spin spin-inside" />
+
+              <div className="e-card p-6">
+                <div className="wave" />
+                <div className="wave" />
+                <div className="wave" />
+
+                <div className="relative z-10">
+                  <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-4">
+                    Social Channels
+                  </span>
+                  <div className="flex gap-4">
+                    <a
+                      href="https://github.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
+                    >
+                      GitHub
+                    </a>
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
+                    >
+                      LinkedIn
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           </div>
 
-          {/* Right Side: Interactive "SEND MESSAGE" Form (7 Cols) */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="lg:col-span-7 p-8 rounded-3xl bg-[#0b0e1e]/90 border border-slate-800/80 backdrop-blur-xl shadow-[0_0_30px_rgba(0,0,0,0.5)]"
-          >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  placeholder="John Doe"
-                  className="w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/80 transition-all font-sans text-sm"
-                />
-              </div>
+          {/* Form Card */}
+          <div className="lg:col-span-7">
+            <div className="card-wrapper">
+              <div className="spin spin-blur" />
+              <div className="spin spin-intense" />
+              <div className="spin spin-inside" />
 
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">
-                  Your Email
-                </label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  placeholder="john@example.com"
-                  className="w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/80 transition-all font-sans text-sm"
-                />
-              </div>
+              <div className="e-card p-8 sm:p-10">
+                <div className="wave" />
+                <div className="wave" />
+                <div className="wave" />
 
-              <div>
-                <label className="block font-mono text-xs uppercase tracking-wider text-slate-400 mb-2">
-                  Message
-                </label>
-                <textarea
-                  required
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="Hi Malinda, I'd like to discuss an opportunity..."
-                  className="w-full px-4 py-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500/80 focus:ring-1 focus:ring-cyan-500/80 transition-all font-sans text-sm resize-none"
-                />
-              </div>
+                <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-6">
+                  <div>
+                    <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="Your Name"
+                      className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors"
+                    />
+                  </div>
 
-              <button
-                type="submit"
-                disabled={formSubmitted}
-                className="w-full py-4 px-6 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-mono font-bold text-xs uppercase tracking-widest flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] disabled:opacity-80 cursor-pointer"
-              >
-                {formSubmitted ? (
-                  <>
-                    <Check className="w-4 h-4 text-slate-950" />
-                    MESSAGE SENT
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 text-slate-950" />
-                    SEND MESSAGE
-                  </>
-                )}
-              </button>
-            </form>
-          </motion.div>
+                  <div>
+                    <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      placeholder="your.email@example.com"
+                      className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
+                      Message
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      placeholder="Write your message..."
+                      className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors resize-none"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-4 rounded-lg bg-white/10 border border-white/20 text-white font-mono text-xs uppercase tracking-widest font-semibold hover:bg-white/20 active:scale-[0.99] transition-all"
+                  >
+                    {submitted ? "Message Sent!" : "Send Message"}
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
 
         </div>
 

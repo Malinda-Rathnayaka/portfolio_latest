@@ -28,21 +28,21 @@ export default function SkillsBackground() {
     const mouse = {
       x: -1000,
       y: -1000,
-      radius: 180,
+      radius: 170,
     };
 
     // Responsive particle density
-    const particleCount = Math.floor((width * height) / 11000);
+    const particleCount = Math.floor((width * height) / 10000);
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        radius: Math.random() * 1.6 + 1,
-        baseAlpha: Math.random() * 0.4 + 0.2,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4,
+        radius: Math.random() * 1.5 + 0.8,
+        baseAlpha: Math.random() * 0.35 + 0.15,
       });
     }
 
@@ -70,7 +70,7 @@ export default function SkillsBackground() {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
 
-      // Render background particles & links
+      // Render background particles & connection links
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
@@ -84,45 +84,45 @@ export default function SkillsBackground() {
         // Draw particle node
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(148, 163, 184, ${p.baseAlpha})`;
+        ctx.fillStyle = `rgba(255, 255, 255, ${p.baseAlpha})`;
         ctx.fill();
 
-        // Connect nearby particles with subtle neutral lines
+        // Connect nearby particles with subtle transparent white lines
         for (let j = i + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
           const dy = p.y - p2.y;
           const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < 95) {
+          if (dist < 100) {
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = `rgba(148, 163, 184, ${0.18 * (1 - dist / 95)})`;
+            ctx.strokeStyle = `rgba(255, 255, 255, ${0.12 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
 
-        // Mouse interaction: Draw light sky-blue connection lines to cursor
+        // Mouse interaction: Draw clean white glass-glow lines to cursor
         const mdx = p.x - mouse.x;
         const mdy = p.y - mouse.y;
         const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
 
         if (mDist < mouse.radius) {
-          const lineAlpha = 0.55 * (1 - mDist / mouse.radius);
+          const lineAlpha = 0.45 * (1 - mDist / mouse.radius);
 
           ctx.beginPath();
           ctx.moveTo(p.x, p.y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(56, 189, 248, ${lineAlpha})`;
-          ctx.lineWidth = 0.9;
+          ctx.strokeStyle = `rgba(255, 255, 255, ${lineAlpha})`;
+          ctx.lineWidth = 0.8;
           ctx.stroke();
 
-          // Gently highlight particle node near cursor
+          // Highlight particle node near cursor
           ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius * 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(125, 211, 252, ${lineAlpha})`;
+          ctx.arc(p.x, p.y, p.radius * 1.6, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255, 255, 255, ${lineAlpha + 0.2})`;
           ctx.fill();
         }
       }
@@ -142,7 +142,7 @@ export default function SkillsBackground() {
 
   return (
     <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
-      <canvas ref={canvasRef} className="w-full h-full" />
+      <canvas ref={canvasRef} className="w-full h-full block" />
     </div>
   );
 }

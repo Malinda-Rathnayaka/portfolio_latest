@@ -39,30 +39,9 @@ export default function Hero() {
   const displayedText = PHRASES[phraseIndex]?.slice(0, charIndex) ?? "";
 
   return (
-    <section id="hero" className="relative w-full min-h-screen bg-black overflow-hidden flex flex-col justify-between">
+    <section id="hero" className="relative w-full min-h-screen bg-black overflow-hidden flex flex-col justify-center">
       
-      {/* 1. TOP NAVIGATION BAR */}
-      <header className="relative z-30 max-w-7xl w-full mx-auto px-6 sm:px-12 py-8 flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="w-12 h-12 rounded-xl bg-black border-2 border-black flex items-center justify-center font-black text-xl text-white tracking-tighter shadow-md">
-            MR
-          </div>
-        </div>
-
-        <nav className="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide text-white">
-          <a href="#about" className="hover:text-gray-300 transition-colors">About me</a>
-          <a href="#skills" className="hover:text-gray-300 transition-colors">Skills</a>
-          <a href="#projects" className="hover:text-gray-300 transition-colors">Portfolio</a>
-          <a
-            href="#contact"
-            className="ml-4 px-6 py-2.5 rounded-full bg-white text-black font-bold uppercase text-xs tracking-wider shadow-md hover:bg-gray-100 transition-all active:scale-95"
-          >
-            CONTACT ME
-          </a>
-        </nav>
-      </header>
-
-      {/* 2. MAIN SPLIT SECTION */}
+      {/* MAIN SPLIT SECTION */}
       <div className="relative w-full flex-1 flex items-center">
         
         {/* DIAGONAL LIGHT GREY BACKGROUND */}
