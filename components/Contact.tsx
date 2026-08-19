@@ -11,8 +11,11 @@ export default function ContactPage() {
     setTimeout(() => setSubmitted(false), 4000);
   };
 
+  const defaultText = "SEND MESSAGE".split("");
+  const sentText = "SENT".split("");
+
   return (
-    <section className="relative w-full min-h-screen py-24 bg-neutral-950 text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
+    <section className="relative w-full min-h-screen py-24 bg-transparent text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
       {/* Custom Styles for Transparent E-Card Waves and Animated Glowing Borders */}
       <style jsx>{`
         .card-wrapper {
@@ -142,6 +145,335 @@ export default function ContactPage() {
           }
           100% {
             transform: rotate(360deg);
+          }
+        }
+
+        /* Uiverse Paper Plane Button Styled for Dark Card UI */
+        .plane-btn {
+          --primary: #38bdf8;
+          --neutral-1: #22252a;
+          --neutral-2: #121316;
+          --radius: 12px;
+
+          cursor: pointer;
+          border-radius: var(--radius);
+          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+          border: none;
+          box-shadow: 0 0.5px 0.5px 1px rgba(255, 255, 255, 0.1),
+            0 10px 20px rgba(0, 0, 0, 0.5), 0 4px 5px 0px rgba(0, 0, 0, 0.3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          transition: all 0.3s ease;
+          width: 100%;
+          height: 56px;
+          font-family: inherit;
+          font-style: normal;
+          font-size: 14px;
+          font-weight: 600;
+          background: transparent;
+          color: #ffffff;
+        }
+
+        .plane-btn:hover {
+          transform: scale(1.01);
+          box-shadow: 0 0 1px 2px rgba(255, 255, 255, 0.2),
+            0 15px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .plane-btn:active {
+          transform: scale(0.99);
+        }
+
+        .plane-btn::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: var(--radius);
+          border: 1.5px solid transparent;
+          background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)) border-box;
+          z-index: 0;
+          transition: all 0.4s ease;
+        }
+
+        .plane-btn:hover::after {
+          transform: scale(1.02, 1.05);
+          box-shadow: inset 0 -1px 3px 0 rgba(255, 255, 255, 0.4);
+        }
+
+        .plane-btn::before {
+          content: "";
+          inset: 4px;
+          position: absolute;
+          background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+          border-radius: 10px;
+          filter: blur(0.5px);
+          z-index: 2;
+        }
+
+        .state p {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0;
+        }
+
+        .state .icon {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          margin: auto;
+          transform: scale(1.1);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .state .icon svg {
+          overflow: visible;
+        }
+
+        /* Outline Glow */
+        .outline {
+          position: absolute;
+          border-radius: inherit;
+          overflow: hidden;
+          z-index: 1;
+          opacity: 0;
+          transition: opacity 0.4s ease;
+          inset: -2px -3.5px;
+        }
+
+        .outline::before {
+          content: "";
+          position: absolute;
+          inset: -100%;
+          background: conic-gradient(
+            from 180deg,
+            transparent 60%,
+            rgba(255, 255, 255, 0.8) 80%,
+            transparent 100%
+          );
+          animation: spin 2s linear infinite;
+          animation-play-state: paused;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        .plane-btn:hover .outline {
+          opacity: 1;
+        }
+
+        .plane-btn:hover .outline::before {
+          animation-play-state: running;
+        }
+
+        /* Animated Letter Spans */
+        .state p span {
+          display: inline-block;
+          opacity: 0;
+          animation: slideDown 0.8s ease forwards calc(var(--i) * 0.03s);
+        }
+
+        .plane-btn:hover p span {
+          opacity: 1;
+          animation: wave 0.5s ease forwards calc(var(--i) * 0.02s);
+        }
+
+        .plane-btn.is-sent p span {
+          opacity: 1;
+          animation: disapear 0.6s ease forwards calc(var(--i) * 0.03s);
+        }
+
+        @keyframes wave {
+          30% {
+            opacity: 1;
+            transform: translateY(3px);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(-3px);
+            color: var(--primary);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes slideDown {
+          0% {
+            opacity: 0;
+            transform: translateY(-20px) rotate(-90deg);
+            color: var(--primary);
+            filter: blur(5px);
+          }
+          30% {
+            opacity: 1;
+            transform: translateY(3px) rotate(0);
+            filter: blur(0);
+          }
+          50% {
+            opacity: 1;
+            transform: translateY(-2px) rotate(0);
+          }
+          100% {
+            opacity: 1;
+            transform: translateY(0) rotate(0);
+          }
+        }
+
+        @keyframes disapear {
+          from {
+            opacity: 1;
+          }
+          to {
+            opacity: 0;
+            transform: translateX(5px) translateY(20px);
+            color: var(--primary);
+            filter: blur(5px);
+          }
+        }
+
+        /* Plane Icon Animations */
+        .state--default .icon svg {
+          animation: land 0.6s ease forwards;
+        }
+
+        .plane-btn:hover .state--default .icon {
+          transform: rotate(45deg) scale(1.15);
+        }
+
+        .plane-btn.is-sent .state--default svg {
+          animation: takeOff 0.8s linear forwards;
+        }
+
+        .plane-btn.is-sent .state--default .icon {
+          transform: rotate(0) scale(1.15);
+        }
+
+        @keyframes takeOff {
+          0% {
+            opacity: 1;
+          }
+          60% {
+            opacity: 1;
+            transform: translateX(70px) rotate(45deg) scale(2);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(160px) rotate(45deg) scale(0);
+          }
+        }
+
+        @keyframes land {
+          0% {
+            transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+            opacity: 0;
+            filter: blur(3px);
+          }
+          100% {
+            transform: translateX(0) translateY(0) rotate(0);
+            opacity: 1;
+            filter: blur(0);
+          }
+        }
+
+        /* Contrail */
+        .state--default .icon::before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          height: 2px;
+          width: 0;
+          left: -5px;
+          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7));
+        }
+
+        .plane-btn.is-sent .state--default .icon::before {
+          animation: contrail 0.8s linear forwards;
+        }
+
+        @keyframes contrail {
+          0% {
+            width: 0;
+            opacity: 1;
+          }
+          8% {
+            width: 15px;
+          }
+          60% {
+            opacity: 0.7;
+            width: 80px;
+          }
+          100% {
+            opacity: 0;
+            width: 160px;
+          }
+        }
+
+        /* State visibility toggles */
+        .state {
+          padding-left: 29px;
+          z-index: 3;
+          display: flex;
+          position: relative;
+        }
+
+        .state--sent {
+          display: none;
+        }
+
+        .state--sent svg {
+          transform: scale(1.15);
+          margin-right: 8px;
+        }
+
+        .plane-btn.is-sent .state--default {
+          position: absolute;
+        }
+
+        .plane-btn.is-sent .state--sent {
+          display: flex;
+        }
+
+        .plane-btn.is-sent .state--sent span {
+          opacity: 0;
+          animation: slideDown 0.8s ease forwards calc(var(--i) * 0.15s);
+        }
+
+        .plane-btn.is-sent .state--sent .icon svg {
+          opacity: 0;
+          animation: appear 1.2s ease forwards 0.6s;
+        }
+
+        @keyframes appear {
+          0% {
+            opacity: 0;
+            transform: scale(3) rotate(-40deg);
+            color: var(--primary);
+            filter: blur(4px);
+          }
+          30% {
+            opacity: 1;
+            transform: scale(0.8);
+            filter: blur(1px);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+            filter: blur(0);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
           }
         }
       `}</style>
@@ -318,12 +650,76 @@ export default function ContactPage() {
                     />
                   </div>
 
+                  {/* Animated Animated Paper Plane Button */}
                   <button
                     type="submit"
-                    className="w-full py-4 rounded-lg bg-white/10 border border-white/20 text-white font-mono text-xs uppercase tracking-widest font-semibold hover:bg-white/20 active:scale-[0.99] transition-all"
+                    className={`plane-btn ${submitted ? "is-sent" : ""}`}
                   >
-                    {submitted ? "Message Sent!" : "Send Message"}
+                    <div className="outline" />
+
+                    {/* Default State */}
+                    <div className="state state--default">
+                      <div className="icon">
+                        <svg
+                          width="18"
+                          height="16"
+                          viewBox="0 0 18 16"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1 8L17 1L10 15L8 9L1 8Z"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <p>
+                        {defaultText.map((char, index) => (
+                          <span
+                            key={index}
+                            style={{ "--i": index } as React.CSSProperties}
+                          >
+                            {char === " " ? "\u00A0" : char}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
+
+                    {/* Sent State */}
+                    <div className="state state--sent">
+                      <div className="icon">
+                        <svg
+                          width="18"
+                          height="14"
+                          viewBox="0 0 18 14"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M1.5 7.5L6.5 12.5L16.5 1.5"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </div>
+                      <p>
+                        {sentText.map((char, index) => (
+                          <span
+                            key={index}
+                            style={{ "--i": index } as React.CSSProperties}
+                          >
+                            {char === " " ? "\u00A0" : char}
+                          </span>
+                        ))}
+                      </p>
+                    </div>
                   </button>
+
                 </form>
               </div>
             </div>

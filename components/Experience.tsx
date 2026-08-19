@@ -63,7 +63,7 @@ export default function Journey() {
   return (
     <section
       id="experience"
-      className="relative w-full py-28 bg-neutral-950 text-white overflow-hidden z-10 selection:bg-white/20 selection:text-white"
+      className="relative w-full py-28 bg-transparent text-white overflow-hidden z-10 selection:bg-white/20 selection:text-white"
     >
       {/* Exact Custom Styles for E-Card Waves and Animated Glowing Borders from ContactPage */}
       <style jsx>{`
