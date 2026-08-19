@@ -146,7 +146,7 @@ export default function About() {
           className="flex items-center gap-3 text-blue-400 font-mono text-xs uppercase tracking-widest"
         >
           <span className="w-8 h-[1px] bg-blue-400/60" />
-          // PORTFOLIO / ABOUT
+         
         </motion.div>
 
         <motion.h2

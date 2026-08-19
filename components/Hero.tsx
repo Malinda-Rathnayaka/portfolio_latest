@@ -304,7 +304,7 @@ export default function Hero() {
               </a>
 
               <a
-                href="https://www.linkedin.com/in/malinda-rathnayaka/"
+                href="https://www.linkedin.com/in/malinda-rathnayaka-988887331/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
