@@ -62,7 +62,7 @@ const JOURNEY_DATA: TimelineYear[] = [
 export default function Journey() {
   return (
     <section
-      id="experience"
+      id="journey"
       className="relative w-full py-28 bg-transparent text-white overflow-hidden z-10 selection:bg-white/20 selection:text-white"
     >
       {/* Exact Custom Styles for E-Card Waves and Animated Glowing Borders from ContactPage */}

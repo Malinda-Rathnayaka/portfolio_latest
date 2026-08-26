@@ -15,7 +15,7 @@ export default function ContactPage() {
   const sentText = "SENT".split("");
 
   return (
-    <section className="relative w-full min-h-screen py-24 bg-transparent text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
+    <section id="contact" className="relative w-full min-h-screen py-24 bg-transparent text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
       {/* Custom Styles for Transparent E-Card Waves and Animated Glowing Borders */}
       <style jsx>{`
         .card-wrapper {
