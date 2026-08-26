@@ -3,20 +3,67 @@
 import React, { useState } from "react";
 
 export default function ContactPage() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [statusText, setStatusText] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 4000);
+    setLoading(true);
+    setStatusText("");
+
+    try {
+      const response = await fetch(
+        "https://formsubmit.co/ajax/rathnayakamalinda14@gmail.com",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+            _subject: `New Portfolio Message from ${formData.name}`,
+            _template: "table",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        setSubmitted(true);
+        setFormData({ name: "", email: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setStatusText("Failed to send message. Please try again.");
+      }
+    } catch {
+      setStatusText("An error occurred. Please check your connection.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const defaultText = "SEND MESSAGE".split("");
   const sentText = "SENT".split("");
 
   return (
-    <section id="contact" className="relative w-full min-h-screen py-24 bg-transparent text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white">
-      {/* Custom Styles for Transparent E-Card Waves and Animated Glowing Borders */}
+    <section
+      id="contact"
+      className="relative w-full min-h-screen py-24 bg-transparent text-white flex flex-col justify-center items-center overflow-hidden selection:bg-white/20 selection:text-white"
+    >
       <style jsx>{`
         .card-wrapper {
           position: relative;
@@ -37,7 +84,6 @@ export default function ContactPage() {
           width: 100%;
         }
 
-        /* Animated Border Effects from SelfMadeSystem */
         .spin {
           position: absolute;
           inset: 0;
@@ -93,7 +139,6 @@ export default function ContactPage() {
           }
         }
 
-        /* Ambient Card Waves */
         .wave {
           position: absolute;
           width: 540px;
@@ -148,7 +193,6 @@ export default function ContactPage() {
           }
         }
 
-        /* Uiverse Paper Plane Button Styled for Dark Card UI */
         .plane-btn {
           --primary: #38bdf8;
           --neutral-1: #22252a;
@@ -192,8 +236,14 @@ export default function ContactPage() {
           inset: 0;
           border-radius: var(--radius);
           border: 1.5px solid transparent;
-          background: linear-gradient(var(--neutral-1), var(--neutral-2)) padding-box,
-            linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05)) border-box;
+          background: linear-gradient(var(--neutral-1), var(--neutral-2))
+              padding-box,
+            linear-gradient(
+                to bottom,
+                rgba(255, 255, 255, 0.2),
+                rgba(255, 255, 255, 0.05)
+              )
+              border-box;
           z-index: 0;
           transition: all 0.4s ease;
         }
@@ -207,7 +257,11 @@ export default function ContactPage() {
           content: "";
           inset: 4px;
           position: absolute;
-          background: linear-gradient(to top, var(--neutral-1), var(--neutral-2));
+          background: linear-gradient(
+            to top,
+            var(--neutral-1),
+            var(--neutral-2)
+          );
           border-radius: 10px;
           filter: blur(0.5px);
           z-index: 2;
@@ -237,7 +291,6 @@ export default function ContactPage() {
           overflow: visible;
         }
 
-        /* Outline Glow */
         .outline {
           position: absolute;
           border-radius: inherit;
@@ -263,8 +316,12 @@ export default function ContactPage() {
         }
 
         @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
         }
 
         .plane-btn:hover .outline {
@@ -275,7 +332,6 @@ export default function ContactPage() {
           animation-play-state: running;
         }
 
-        /* Animated Letter Spans */
         .state p span {
           display: inline-block;
           opacity: 0;
@@ -342,7 +398,6 @@ export default function ContactPage() {
           }
         }
 
-        /* Plane Icon Animations */
         .state--default .icon svg {
           animation: land 0.6s ease forwards;
         }
@@ -375,7 +430,8 @@ export default function ContactPage() {
 
         @keyframes land {
           0% {
-            transform: translateX(-60px) translateY(30px) rotate(-50deg) scale(2);
+            transform: translateX(-60px) translateY(30px) rotate(-50deg)
+              scale(2);
             opacity: 0;
             filter: blur(3px);
           }
@@ -386,7 +442,6 @@ export default function ContactPage() {
           }
         }
 
-        /* Contrail */
         .state--default .icon::before {
           content: "";
           position: absolute;
@@ -394,7 +449,11 @@ export default function ContactPage() {
           height: 2px;
           width: 0;
           left: -5px;
-          background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.7));
+          background: linear-gradient(
+            to right,
+            transparent,
+            rgba(255, 255, 255, 0.7)
+          );
         }
 
         .plane-btn.is-sent .state--default .icon::before {
@@ -419,7 +478,6 @@ export default function ContactPage() {
           }
         }
 
-        /* State visibility toggles */
         .state {
           padding-left: 29px;
           z-index: 3;
@@ -478,12 +536,9 @@ export default function ContactPage() {
         }
       `}</style>
 
-      {/* Subtle Background Glow */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-white/[0.02] rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-6xl w-full px-6 md:px-10">
-        
-        {/* Header */}
         <div className="text-center mb-16">
           <span className="text-xs font-mono tracking-widest text-neutral-400 uppercase">
             // Get In Touch
@@ -492,24 +547,20 @@ export default function ContactPage() {
             Contact Me
           </h2>
           <p className="mt-4 text-neutral-400 font-light text-base sm:text-lg max-w-xl mx-auto">
-            Have a project in mind, an opportunity to discuss, or just want to connect? Send a message below.
+            Have a project in mind, an opportunity to discuss, or just want to
+            connect? Send a message below.
           </p>
         </div>
 
-        {/* Contact Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
-          {/* Direct Info Cards */}
           <div className="lg:col-span-5 flex flex-col gap-6">
-            
-            {/* Email Card */}
             <div className="card-wrapper">
               <div className="spin spin-blur" />
               <div className="spin spin-intense" />
               <div className="spin spin-inside" />
 
               <a
-                href="mailto:hello@example.com"
+                href="mailto:rathnayakamalinda14@gmail.com"
                 className="e-card p-6 flex items-center justify-between group transition-all duration-300 block"
               >
                 <div className="wave" />
@@ -520,20 +571,29 @@ export default function ContactPage() {
                   <span className="text-xs font-mono text-neutral-400 uppercase tracking-widest block mb-1">
                     Email
                   </span>
-                  <p className="text-lg font-semibold text-white group-hover:text-neutral-200">
-                    hello@example.com
+                  <p className="text-base sm:text-lg font-semibold text-white group-hover:text-neutral-200">
+                    rathnayakamalinda14@gmail.com
                   </p>
                 </div>
 
                 <div className="relative z-10 p-3 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 002-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                    />
                   </svg>
                 </div>
               </a>
             </div>
 
-            {/* Location Card */}
             <div className="card-wrapper">
               <div className="spin spin-blur" />
               <div className="spin spin-intense" />
@@ -554,15 +614,29 @@ export default function ContactPage() {
                 </div>
 
                 <div className="relative z-10 p-3 rounded-full bg-white/5 border border-white/10">
-                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  <svg
+                    className="w-5 h-5 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="1.5"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
                   </svg>
                 </div>
               </div>
             </div>
 
-            {/* Social Links Card */}
             <div className="card-wrapper">
               <div className="spin spin-blur" />
               <div className="spin spin-intense" />
@@ -579,7 +653,7 @@ export default function ContactPage() {
                   </span>
                   <div className="flex gap-4">
                     <a
-                      href="https://github.com"
+                      href="https://github.com/Malinda-Rathnayaka"
                       target="_blank"
                       rel="noreferrer"
                       className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
@@ -587,7 +661,7 @@ export default function ContactPage() {
                       GitHub
                     </a>
                     <a
-                      href="https://linkedin.com"
+                      href="https://www.linkedin.com/in/malinda-rathnayaka-988887331/"
                       target="_blank"
                       rel="noreferrer"
                       className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-mono text-neutral-300 hover:text-white hover:bg-white/10 transition-all"
@@ -598,10 +672,8 @@ export default function ContactPage() {
                 </div>
               </div>
             </div>
-
           </div>
 
-          {/* Form Card */}
           <div className="lg:col-span-7">
             <div className="card-wrapper">
               <div className="spin spin-blur" />
@@ -613,14 +685,20 @@ export default function ContactPage() {
                 <div className="wave" />
                 <div className="wave" />
 
-                <form onSubmit={handleSubmit} className="relative z-10 flex flex-col gap-6">
+                <form
+                  onSubmit={handleSubmit}
+                  className="relative z-10 flex flex-col gap-6"
+                >
                   <div>
                     <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
                       Name
                     </label>
                     <input
                       type="text"
+                      name="name"
                       required
+                      value={formData.name}
+                      onChange={handleChange}
                       placeholder="Your Name"
                       className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors"
                     />
@@ -632,7 +710,10 @@ export default function ContactPage() {
                     </label>
                     <input
                       type="email"
+                      name="email"
                       required
+                      value={formData.email}
+                      onChange={handleChange}
                       placeholder="your.email@example.com"
                       className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors"
                     />
@@ -643,21 +724,29 @@ export default function ContactPage() {
                       Message
                     </label>
                     <textarea
+                      name="message"
                       rows={4}
                       required
+                      value={formData.message}
+                      onChange={handleChange}
                       placeholder="Write your message..."
                       className="w-full px-4 py-3 rounded-lg bg-white/[0.03] border border-white/10 text-white placeholder-neutral-600 focus:outline-none focus:border-white/30 transition-colors resize-none"
                     />
                   </div>
 
-                  {/* Animated Animated Paper Plane Button */}
+                  {statusText && (
+                    <p className="text-xs font-mono text-red-400">
+                      {statusText}
+                    </p>
+                  )}
+
                   <button
                     type="submit"
+                    disabled={loading}
                     className={`plane-btn ${submitted ? "is-sent" : ""}`}
                   >
                     <div className="outline" />
 
-                    {/* Default State */}
                     <div className="state state--default">
                       <div className="icon">
                         <svg
@@ -688,7 +777,6 @@ export default function ContactPage() {
                       </p>
                     </div>
 
-                    {/* Sent State */}
                     <div className="state state--sent">
                       <div className="icon">
                         <svg
@@ -719,14 +807,11 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </button>
-
                 </form>
               </div>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   );
