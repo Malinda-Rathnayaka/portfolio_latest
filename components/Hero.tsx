@@ -217,7 +217,7 @@ export default function Hero() {
           right: 0;
           bottom: 0;
           box-shadow: 0px 0 0 0 white;
-          transition: all 1.5s ease;
+          animation: resumeGlow 2.4s ease-in-out infinite;
         }
 
         .liquid-resume-btn:hover::after {
@@ -235,7 +235,7 @@ export default function Hero() {
           text-align: center;
           transform: translate(-50%, -50%);
           color: black;
-          transition: all 1.5s ease;
+          animation: resumeText 2.4s ease-in-out infinite;
           z-index: 10;
         }
 
@@ -259,11 +259,44 @@ export default function Hero() {
           left: 50%;
           top: 50%;
           transform: translate(-50%, -50%);
-          transition: all 0.8s ease;
+          animation: resumeFill 2.4s ease-in-out infinite;
         }
 
         .liquid-resume-btn:hover::before {
           width: 100%;
+        }
+
+        @keyframes resumeFill {
+          0%,
+          100% {
+            width: 0;
+          }
+          35%,
+          65% {
+            width: 100%;
+          }
+        }
+
+        @keyframes resumeText {
+          0%,
+          100% {
+            color: black;
+          }
+          35%,
+          65% {
+            color: white;
+          }
+        }
+
+        @keyframes resumeGlow {
+          0%,
+          100% {
+            box-shadow: 0px 0 0 0 transparent;
+          }
+          35%,
+          65% {
+            box-shadow: 0px -13px 56px 12px #ffffffa6;
+          }
         }
       `}</style>
 
