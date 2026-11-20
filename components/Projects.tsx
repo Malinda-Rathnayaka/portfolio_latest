@@ -29,7 +29,7 @@ const PROJECTS: Project[] = [
     subtitle: "Real Estate Marketplace",
     description:
       "A full-stack real estate platform where users can browse, create, and manage property listings with real-time search filters and secure authentication.",
-    image: DEMO_IMAGES.estate,
+    image: "/mern-estate.png",
     tags: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS", "Firebase"],
     githubUrl: "https://github.com/Malinda-Rathnayaka/mern-state.git",
     liveUrl: "https://github.com/Malinda-Rathnayaka/MERN-Estate",
@@ -54,7 +54,7 @@ const PROJECTS: Project[] = [
     subtitle: "University Management System",
     description:
       "An integrated university management system designed to streamline student registration, course tracking, and administrative records.",
-    image: DEMO_IMAGES.university,
+    image: "/smart-uni.png",
     tags: ["Java", "MySQL", "JDBC", "HTML/CSS", "Servlets"],
     githubUrl: "https://github.com/Malinda-Rathnayaka/smart-university-system.git",
     liveUrl: "https://github.com/Malinda-Rathnayaka/smart-university-system",
@@ -79,7 +79,7 @@ const PROJECTS: Project[] = [
     subtitle: "Travel & Tourism Web App",
     description:
       "An interactive web platform for discovering travel destinations, satellite maps, itineraries, and live weather conditions.",
-    image: DEMO_IMAGES.tourvana,
+    image: "/tourvana.png",
     tags: ["React", "JavaScript", "REST API", "CSS3", "HTML5"],
     githubUrl: "https://github.com/Malinda-Rathnayaka/Tourvana_All.git",
     liveUrl: "https://github.com/Malinda-Rathnayaka/Tourvana_All",
@@ -104,7 +104,7 @@ const PROJECTS: Project[] = [
     subtitle: "Android Mobile Application",
     description:
       "Native Android mobile application providing vehicle search, reservation date selection, and real-time booking updates.",
-    image: DEMO_IMAGES.rental,
+    image: "/vehicle_rental1.png",
     tags: ["Kotlin", "Android SDK", "Firebase", "XML"],
     githubUrl: "https://github.com/Malinda-Rathnayaka/ApplicatioVecle_Rental_Mobile_Application.git",
     liveUrl: "https://github.com/Malinda-Rathnayaka/Vehicle_Rental_Mobile_Application",
@@ -148,28 +148,27 @@ const PROJECTS: Project[] = [
     },
   },
   {
-    id: "vehicle-fault-chatbot",
+    id: "opd-connect",
     number: "06",
-    title: "Vehicle Fault Assistant",
-    subtitle: "AI Diagnostic Chatbot",
+    title: "OPD Connect",
+    subtitle: "Hospital Appointment & Queue System",
     description:
-      "An AI chatbot interpreting vehicle fault symptoms in natural language and generating detailed troubleshooting steps using Gemini API.",
-    image: DEMO_IMAGES.chatbot,
-    tags: ["JavaScript", "Gemini API", "HTML5", "Bootstrap"],
-    githubUrl: "https://github.com/Malinda-Rathnayaka/chatbot.git",
-    liveUrl: "https://malinda-rathnayaka.github.io/chatbot/",
+      "A healthcare mobile solution for government hospitals that supports remote OPD reservations, live queue tracking, appointment alerts, and role-based administration.",
+    image: "/opd_connect.png",
+    tags: ["Flutter", "Dart", "Firebase", "Firestore", "Email OTP"],
+    githubUrl: "https://github.com/Malinda-Rathnayaka/OPD-Connect.git",
     caseStudy: {
       problem:
-        "Drivers struggle to diagnose unexpected mechanical sounds or warning symbols without immediate expert assistance.",
+        "Government hospital patients face early-morning physical queues and lack real-time information about their outpatient department appointments.",
       solution:
-        "Created an interactive conversational assistant that parses issue descriptions and provides diagnostic insights.",
-      roles: ["Frontend Developer", "AI Prompt Engineer"],
-      architecture: ["User Prompt Interface", "↓", "Client API Request Handler", "↓", "Google Gemini API"],
-      technologies: ["JavaScript", "Gemini API", "HTML5", "Bootstrap 5"],
+        "Built a cross-platform Flutter application for OPD slot booking, live queue position tracking, departure alerts, doctor consultations, and hospital administration.",
+      roles: ["Flutter Developer", "Firebase Engineer", "UI/UX Designer"],
+      architecture: ["Flutter Client", "↓", "Authentication & Role Guard", "↓", "Firebase / Firestore"],
+      technologies: ["Flutter", "Dart", "Firebase Auth", "Cloud Firestore", "EmailJS"],
       challenges:
-        "Designing structured system prompts to consistently return accurate, safe, and readable diagnostic responses.",
+        "Synchronizing real-time queue states across patient, doctor, and administrator views while enforcing role-based access and secure account approval.",
       learned:
-        "LLM API integration, prompt engineering techniques, and handling streaming responses.",
+        "Cross-platform Flutter development, real-time Firestore streams, authentication workflows, and healthcare-oriented role-based system design.",
     },
   },
 ];
